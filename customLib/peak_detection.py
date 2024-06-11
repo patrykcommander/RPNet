@@ -3,7 +3,7 @@ import numpy as np
 import neurokit2 as nk
 from scipy.ndimage import label
 
-def detect_peaks(signal: np.ndarray, threshold=0.3, qrs_filter=None):
+def _detect_peaks(signal: np.ndarray, threshold=0.3, qrs_filter=None):
 
     if qrs_filter == None:
         t = np.linspace(1.5 * np.pi, 3.5 * np.pi, 15)
@@ -30,8 +30,8 @@ def group_peaks(indices, threshold=5):
         
     return output.astype(int)
 
-def detect_my_peaks(signal, threshold=0.3):
-    r_peaks, similarity = detect_peaks(signal, threshold=threshold)
+def detect_peaks(signal, threshold=0.3):
+    r_peaks, similarity = _detect_peaks(signal, threshold=threshold)
     peaks = group_peaks(r_peaks)
     return peaks
 
@@ -39,7 +39,6 @@ def detect_my_peaks(signal, threshold=0.3):
 def detect_nk(ecg_slice, fs):
     _, r_peaks = nk.ecg_peaks(ecg_slice, sampling_rate=fs)
     r_peaks = r_peaks['ECG_R_Peaks']
-    r_peak_time = np.array([x * 1/fs for x in r_peaks])
-    return r_peaks, r_peak_time
+    return r_peaks
 
 
