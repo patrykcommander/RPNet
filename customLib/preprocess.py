@@ -1,5 +1,5 @@
 import numpy as np
-from customLib.load_wfdb import *
+from customLib.load_ptbxl import *
 #from customLib.peak_detection import detect_my_peaks
 
 def add_padding(signal: np.ndarray, kernel_length: int):
